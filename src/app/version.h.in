@@ -1,0 +1,60 @@
+/*-------------------------------------------------
+ *
+ * OrbitsWriter - an Offline Blog Writer
+ *
+ * Copyright (C) 2013 devbean@galaxyworld.org
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *-------------------------------------------------*/
+
+#ifndef VERSION_H
+#define VERSION_H
+
+namespace OrbitsWriter
+{
+
+#define STRINGIFY_INTERNAL(x) #x
+#define STRINGIFY(x) STRINGIFY_INTERNAL(x)
+
+#define VERSION $${APPLICATION_VERSION}
+#define VERSION_STR STRINGIFY($${APPLICATION_VERSION})
+
+#define VERSION_MAJOR $$replace(APPLICATION_VERSION, "^(\\d+)\\.\\d+\\.\\d+(-.*)?$", \\1)
+#define VERSION_MINOR $$replace(APPLICATION_VERSION, "^\\d+\\.(\\d+)\\.\\d+(-.*)?$", \\1)
+#define VERSION_PATCH $$replace(APPLICATION_VERSION, "^\\d+\\.\\d+\\.(\\d+)(-.*)?$", \\1)
+
+const char * const VERSION_LONG         = VERSION_STR;
+const char * const APPLICATION_NAME     = \"$${APPLICATION_NAME}\";
+const char * const APPLICATION_NAME_MAC = \"Orbits Writer\";
+const char * const ORGANIZATION         = \"GalaxyWorld\";
+const char * const ORGANIZATION_DOMAIN  = \"GalaxyWorld.Org\";
+const char * const YEAR                 = \"2013-2016\";
+const char * const APPLICATION_REVISION = \"$${APPLICATION_REVISION}\";
+
+// changes the path where the settings are saved to
+#ifdef SETTINGSVARIANT
+const char * const SETTINGSVARIANT_STR      = STRINGIFY(APPLICATION_SETTINGSVARIANT);
+#else
+const char * const SETTINGSVARIANT_STR      = \"GalaxyWorld\";
+#endif
+
+#undef VERSION
+#undef VERSION_STR
+#undef STRINGIFY
+#undef STRINGIFY_INTERNAL
+
+} // end of namespace OrbitsWriter
+
+#endif // VERSION_H
