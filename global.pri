@@ -87,8 +87,8 @@ osx {
 
 INCLUDEPATH += \
     $$BUILD_TREE/src/app \ # for <version.h>
-    $$SOURCE_TREE/source/libs \
-    $$SOURCE_TREE/source/plugins
+    $$SOURCE_TREE/src/libs \
+    $$SOURCE_TREE/src/plugins
 
 CONFIG += depend_includepath
 

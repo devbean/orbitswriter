@@ -27,10 +27,11 @@ TEMPLATE = app
 TARGET   = $$APPLICATION_TARGET
 DESTDIR  = $$APPLICATION_BIN_PATH
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+include(../rpath.pri)
 
-HEADERS  += mainwindow.h
+LIBS    *= -l$$libraryName(core)
+
+SOURCES += main.cpp
 
 win32 {
     RC_FILE      = app.rc

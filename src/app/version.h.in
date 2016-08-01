@@ -22,7 +22,7 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-namespace OrbitsWriter
+namespace Application
 {
 
 #define STRINGIFY_INTERNAL(x) #x

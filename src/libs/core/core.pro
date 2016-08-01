@@ -19,8 +19,32 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    libs \
-    app
+TARGET   = core
+DEFINES += CORE_LIBRARY
+
+include(../library.pri)
+
+SOURCES += \
+    mainwindow.cpp \
+    appcontext.cpp \
+    visualeditor.cpp \
+    sourceeditor.cpp \
+    previewer.cpp \
+    document/markupbuilder.cpp \
+    document/markupgenerator.cpp
+
+HEADERS  += \
+    mainwindow.h \
+    mainwindow_p.h \
+    appcontext.h \
+    appcontext_p.h \
+    core_global.h \
+    appcontextlistener.h \
+    visualeditor.h \
+    sourceeditor.h \
+    previewer.h \
+    document/markupbuilder.h \
+    document/markupgenerator.h
+
+RESOURCES += \
+    core.qrc
