@@ -44,7 +44,9 @@ HEADERS  += \
     sourceeditor.h \
     previewer.h \
     document/markupbuilder.h \
-    document/markupgenerator.h
+    document/markupgenerator.h \
+    document/markupgenerator_p.h \
+    document/markupelement.h
 
 RESOURCES += \
     core.qrc
