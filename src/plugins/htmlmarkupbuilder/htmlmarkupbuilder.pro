@@ -19,9 +19,19 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    libs \
-    plugins \
-    app
+TARGET   = htmlmarkupbuilder
+DEFINES += HTMLBUILDER_LIBRARY
+
+include(../plugin.pri)
+include(../../libs/core/core.pri)
+
+SOURCES += \
+    htmlmarkupbuilderplugin.cpp
+
+HEADERS += \
+    htmlmarkupbuilderplugin.h
+
+OTHER_FILES +=
+
+DISTFILES += \
+    htmlmarkupbuilder.json.in

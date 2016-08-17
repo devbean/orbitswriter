@@ -19,54 +19,39 @@
  *
  *-------------------------------------------------*/
 
-#ifndef APPCONTEXT_P_H
-#define APPCONTEXT_P_H
+#ifndef PLUGINMANAGER_H
+#define PLUGINMANAGER_H
 
-#include "appcontextlistener.h"
+#include "pluginmanager_p.h"
 
 #include <QObject>
-#include <QSettings>
 
 namespace Core
 {
 
-class AppContext;
-class AppContextListener;
-class MainWindow;
-class PluginManager;
+enum class PluginType : unsigned int {
+    MarkupBuilder,
+    Publisher
+};
 
-namespace Internal
-{
-
-class AppContextPrivate : public QObject, public AppContextListener
+class PluginManager : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(AppContextPrivate)
-    Q_DECLARE_PUBLIC(Core::AppContext)
-    AppContext * const q_ptr;
-
-    AppContextPrivate(AppContext *ctx);
-
-    // AppContextListener
-    void onAppContextStarted() Q_DECL_OVERRIDE;
-    void onAppContextAboutToExit() Q_DECL_OVERRIDE;
-
-    // settings
-    void writeSettings();
-    void readSettings();
-
-    MainWindow *mainWindow;
-    QSettings *settings;
-    PluginManager *pluginManager;
-
-    QList<AppContextListener *> contextListeners;
+    Q_DECLARE_PRIVATE(Internal::PluginManager)
+    QScopedPointer<Internal::PluginManagerPrivate> const d_ptr;
 
 public:
-    ~AppContextPrivate();
-}; // end of class Core::Internal::AppContextPrivate
+    explicit PluginManager(QObject *parent = 0);
 
-} // end of namespace Core::Internal
+    void loadPlugins();
+
+}; // end of class PluginManager
 
 } // end of namespace Core
 
-#endif // APPCONTEXT_P_H
+inline uint qHash(const Core::PluginType &type)
+{
+    return qHash((unsigned int)type);
+}
+
+#endif // PLUGINMANAGER_H

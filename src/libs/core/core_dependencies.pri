@@ -2,7 +2,7 @@
 #
 # OrbitsWriter - an Offline Blog Writer
 #
-# Copyright (C) 2016 devbean@galaxyworld.org
+# Copyright (C) 2013 devbean@galaxyworld.org
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,10 +18,3 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #-------------------------------------------------
-
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    libs \
-    plugins \
-    app

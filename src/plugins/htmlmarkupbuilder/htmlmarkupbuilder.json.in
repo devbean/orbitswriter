@@ -1,0 +1,15 @@
+{
+    \"Name\" : \"htmlmarkupbuilder\",
+    \"Version\" : \"$$APPLICATION_VERSION\",
+    \"CompatVersion\" : \"$$APPLICATION_VERSION\",
+    \"Required\" : true,
+    \"Vendor\" : \"galaxyworld.org\",
+    \"Copyright\" : \"(C) 2016 galaxyworld.org\",
+    \"License\" : [ \"GNU General Public License Usage\",
+                  \"\",
+                  \"This plugin could be used under the terms of the GNU General Public License version 3 as published by the Free Software Foundation with exceptions as appearing in the file LICENSE.GPL3-EXCEPT included in the packaging of this plugin. Please review the following information to ensure the GNU General Public License requirements will be met: https://www.gnu.org/licenses/gpl-3.0.html.\"
+    ],
+    \"Category\" : \"Markup\",
+    \"Description\" : \"The HTML markup builder plugin for OrbitsWriter.\",
+    \"Url\" : \"http://orbitswriter.galaxyworld.org\"
+}

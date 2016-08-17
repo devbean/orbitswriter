@@ -31,7 +31,9 @@ SOURCES += \
     sourceeditor.cpp \
     previewer.cpp \
     document/markupbuilder.cpp \
-    document/markupgenerator.cpp
+    document/markupgenerator.cpp \
+    pluginmanager.cpp \
+    plugin.cpp
 
 HEADERS  += \
     mainwindow.h \
@@ -46,7 +48,11 @@ HEADERS  += \
     document/markupbuilder.h \
     document/markupgenerator.h \
     document/markupgenerator_p.h \
-    document/markupelement.h
+    document/markupelement.h \
+    pluginmanager.h \
+    pluginmanager_p.h \
+    plugin.h \
+    publisher.h
 
 RESOURCES += \
     core.qrc

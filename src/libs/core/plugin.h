@@ -19,54 +19,26 @@
  *
  *-------------------------------------------------*/
 
-#ifndef APPCONTEXT_P_H
-#define APPCONTEXT_P_H
+#ifndef PLUGIN_H
+#define PLUGIN_H
 
-#include "appcontextlistener.h"
+#include "core/core_global.h"
 
 #include <QObject>
-#include <QSettings>
 
 namespace Core
 {
 
-class AppContext;
-class AppContextListener;
-class MainWindow;
-class PluginManager;
-
-namespace Internal
+class CORE_EXPORT Plugin
 {
-
-class AppContextPrivate : public QObject, public AppContextListener
-{
-    Q_OBJECT
-    Q_DISABLE_COPY(AppContextPrivate)
-    Q_DECLARE_PUBLIC(Core::AppContext)
-    AppContext * const q_ptr;
-
-    AppContextPrivate(AppContext *ctx);
-
-    // AppContextListener
-    void onAppContextStarted() Q_DECL_OVERRIDE;
-    void onAppContextAboutToExit() Q_DECL_OVERRIDE;
-
-    // settings
-    void writeSettings();
-    void readSettings();
-
-    MainWindow *mainWindow;
-    QSettings *settings;
-    PluginManager *pluginManager;
-
-    QList<AppContextListener *> contextListeners;
-
 public:
-    ~AppContextPrivate();
-}; // end of class Core::Internal::AppContextPrivate
+    virtual ~Plugin() {}
 
-} // end of namespace Core::Internal
+    virtual QString name() const = 0;
+    virtual QString version() const = 0;
+    virtual QString vendor() const = 0;
+};
 
 } // end of namespace Core
 
-#endif // APPCONTEXT_P_H
+#endif // PLUGIN_H

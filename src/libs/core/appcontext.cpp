@@ -21,6 +21,7 @@
 
 #include "appcontext.h"
 #include "mainwindow.h"
+#include "pluginmanager.h"
 
 namespace Core
 {
@@ -34,7 +35,8 @@ namespace Internal
 
 AppContextPrivate::AppContextPrivate(AppContext *ctx)
     : q_ptr(ctx),
-      mainWindow(new MainWindow)
+      mainWindow(new MainWindow),
+      pluginManager(new PluginManager)
 {
     contextListeners.append(this);
 }
@@ -42,6 +44,7 @@ AppContextPrivate::AppContextPrivate(AppContext *ctx)
 AppContextPrivate::~AppContextPrivate()
 {
     delete mainWindow;
+    delete pluginManager;
 }
 
 void AppContextPrivate::onAppContextStarted()
@@ -93,6 +96,8 @@ AppContext::AppContext(QObject *parent)
 void AppContext::start()
 {
     Q_D(Internal::AppContext);
+
+    d->pluginManager->loadPlugins();
 
     for (AppContextListener *listener : d->contextListeners) {
         listener->onAppContextStarted();

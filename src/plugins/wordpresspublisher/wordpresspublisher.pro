@@ -19,9 +19,19 @@
 #
 #-------------------------------------------------
 
-TEMPLATE = subdirs
-CONFIG  += ordered
-SUBDIRS  = \
-    libs \
-    plugins \
-    app
+TARGET   = wordpresspublisher
+DEFINES += WPUBLISHER_LIBRARY
+
+include(../plugin.pri)
+include(../../libs/core/core.pri)
+
+SOURCES += \
+    wordpresspublisherplugin.cpp
+
+HEADERS += \
+    wordpresspublisherplugin.h
+
+OTHER_FILES +=
+
+DISTFILES += \
+    wordpresspublisher.json.in

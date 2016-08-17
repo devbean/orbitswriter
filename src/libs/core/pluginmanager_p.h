@@ -19,54 +19,39 @@
  *
  *-------------------------------------------------*/
 
-#ifndef APPCONTEXT_P_H
-#define APPCONTEXT_P_H
+#ifndef PLUGINMANAGER_P_H
+#define PLUGINMANAGER_P_H
 
-#include "appcontextlistener.h"
-
+#include <QMultiHash>
 #include <QObject>
-#include <QSettings>
 
 namespace Core
 {
 
-class AppContext;
-class AppContextListener;
-class MainWindow;
+class Plugin;
 class PluginManager;
+enum class PluginType : unsigned int;
 
 namespace Internal
 {
 
-class AppContextPrivate : public QObject, public AppContextListener
+class PluginManagerPrivate : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(AppContextPrivate)
-    Q_DECLARE_PUBLIC(Core::AppContext)
-    AppContext * const q_ptr;
+    Q_DISABLE_COPY(PluginManagerPrivate)
+    Q_DECLARE_PUBLIC(Core::PluginManager)
+    PluginManager * const q_ptr;
 
-    AppContextPrivate(AppContext *ctx);
+    PluginManagerPrivate(PluginManager *mgr);
 
-    // AppContextListener
-    void onAppContextStarted() Q_DECL_OVERRIDE;
-    void onAppContextAboutToExit() Q_DECL_OVERRIDE;
+    void loadPlugins();
 
-    // settings
-    void writeSettings();
-    void readSettings();
+    QMultiHash<PluginType, Plugin *> plugins;
 
-    MainWindow *mainWindow;
-    QSettings *settings;
-    PluginManager *pluginManager;
-
-    QList<AppContextListener *> contextListeners;
-
-public:
-    ~AppContextPrivate();
-}; // end of class Core::Internal::AppContextPrivate
+}; // end of class Core::Internal::PluginManagerPrivate
 
 } // end of namespace Core::Internal
 
 } // end of namespace Core
 
-#endif // APPCONTEXT_P_H
+#endif // PLUGINMANAGER_P_H
