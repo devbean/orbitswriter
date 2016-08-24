@@ -19,239 +19,446 @@
  *
  *-------------------------------------------------*/
 
-#include "htmlmarkupbuilderplugin.h"
+#include "htmlmarkupbuilder.h"
 
-QString HTMLMarkupBuilderPlugin::name() const
+//---------- HTMLMarkupBuilderPrivate ----------//
+
+HTMLMarkupBuilderPrivate::HTMLMarkupBuilderPrivate(HTMLMarkupBuilder *builder)
+    : q_ptr(builder)
+{
+
+}
+
+//---------- HTMLMarkupBuilder ----------//
+
+HTMLMarkupBuilder::HTMLMarkupBuilder(QObject *parent)
+    : QObject(parent),
+      d_ptr(new HTMLMarkupBuilderPrivate(this))
+{
+
+}
+
+QString HTMLMarkupBuilder::name() const
 {
     return QStringLiteral("HtmlMarkupBuilder");
 }
 
-QString HTMLMarkupBuilderPlugin::version() const
+QString HTMLMarkupBuilder::version() const
 {
     return QStringLiteral("1.0.0");
 }
 
-QString HTMLMarkupBuilderPlugin::vendor() const
+QString HTMLMarkupBuilder::vendor() const
 {
     return QStringLiteral("galaxyworld.org");
 }
 
-void HTMLMarkupBuilderPlugin::beginStrong()
+void HTMLMarkupBuilder::beginStrong()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<strong>"));
 }
 
-void HTMLMarkupBuilderPlugin::endStrong()
+void HTMLMarkupBuilder::endStrong()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</strong>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginEmphasised()
+void HTMLMarkupBuilder::beginEmphasised()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<em>"));
 }
 
-void HTMLMarkupBuilderPlugin::endEmphasised()
+void HTMLMarkupBuilder::endEmphasised()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</em>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginUnderline()
+void HTMLMarkupBuilder::beginUnderline()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<u>"));
 }
 
-void HTMLMarkupBuilderPlugin::endUnderline()
+void HTMLMarkupBuilder::endUnderline()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</u>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginStrikeout()
+void HTMLMarkupBuilder::beginStrikeout()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<s>"));
 }
 
-void HTMLMarkupBuilderPlugin::endStrikeout()
+void HTMLMarkupBuilder::endStrikeout()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</s>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginForeground(const QBrush &brush)
+void HTMLMarkupBuilder::beginForeground(const QBrush &brush)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<span style=\"color:%1;\">").arg(brush.color().name()));
 }
 
-void HTMLMarkupBuilderPlugin::endForeground()
+void HTMLMarkupBuilder::endForeground()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginBackground(const QBrush &brush)
+void HTMLMarkupBuilder::beginBackground(const QBrush &brush)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<span style=\"background-color:%1;\">").arg(brush.color().name()));
 }
 
-void HTMLMarkupBuilderPlugin::endBackground()
+void HTMLMarkupBuilder::endBackground()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginAnchor(const QString &href, const QString &name)
+void HTMLMarkupBuilder::beginAnchor(const QString &href, const QString &name)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    if (!href.isEmpty()) {
+        if (!name.isEmpty()) {
+            d->html.append(QStringLiteral("<a href=\"%1\" name=\"%2\">").arg(href, name));
+        } else {
+            d->html.append(QStringLiteral("<a href=\"%1\">").arg(href));
+        }
+    } else {
+        if (!name.isEmpty()) {
+            d->html.append(QStringLiteral("<a name=\"%1\">").arg(name));
+        }
+    }
 }
 
-void HTMLMarkupBuilderPlugin::endAnchor()
+void HTMLMarkupBuilder::endAnchor()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</a>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginFontFamily(const QString &family)
+void HTMLMarkupBuilder::beginFontFamily(const QString &family)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<span style=\"font-family:%1;\">").arg(family));
 }
 
-void HTMLMarkupBuilderPlugin::endFontFamily()
+void HTMLMarkupBuilder::endFontFamily()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginFontPointSize(int size)
+void HTMLMarkupBuilder::beginFontPointSize(int size)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<span style=\"font-size:%1pt;\">").arg(QString::number(size)));
 }
 
-void HTMLMarkupBuilderPlugin::endFontPointSize()
+void HTMLMarkupBuilder::endFontPointSize()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginParagraph(Qt::Alignment a, qreal top, qreal bottom, qreal left, qreal right)
+void HTMLMarkupBuilder::beginParagraph(Qt::Alignment a, qreal top, qreal bottom, qreal left, qreal right)
 {
+    Q_D(HTMLMarkupBuilder);
+    QString style;
+    if (top != 0) {
+        style.append(QStringLiteral("margin-top:%1;").arg(top));
+    }
+    if (bottom != 0) {
+        style.append(QStringLiteral("margin-bottom:%1;").arg(bottom));
+    }
+    if (left != 0) {
+        style.append(QStringLiteral("margin-left:%1;").arg(left));
+    }
+    if (right != 0) {
+        style.append(QStringLiteral("margin-right:%1;").arg(right));
+    }
 
+    if (a & Qt::AlignRight) {
+        d->html.append(QStringLiteral("<p align=\"right\" "));
+    } else if (a & Qt::AlignHCenter) {
+        d->html.append(QStringLiteral("<p align=\"center\" "));
+    } else if (a & Qt::AlignJustify) {
+        d->html.append(QStringLiteral("<p align=\"justify\" "));
+    } else if (a & Qt::AlignLeft) {
+        d->html.append(QStringLiteral("<p"));
+    } else {
+        d->html.append(QStringLiteral("<p"));
+    }
+
+    if (!style.isEmpty()) {
+        d->html.append(QStringLiteral(" \"") + style + QLatin1Char('"'));
+    }
+    d->html.append(QLatin1Char('>'));
 }
 
-void HTMLMarkupBuilderPlugin::endParagraph()
+void HTMLMarkupBuilder::endParagraph()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</p>"));
 }
 
-void HTMLMarkupBuilderPlugin::addNewline()
+void HTMLMarkupBuilder::addNewline()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<br />"));
 }
 
-void HTMLMarkupBuilderPlugin::insertHorizontalRule(int width)
+void HTMLMarkupBuilder::insertHorizontalRule(int width)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    if (width != -1) {
+        d->html.append(QStringLiteral("<hr width=\"%1\" />").arg(width));
+    }
+    d->html.append(QStringLiteral("<hr />"));
 }
 
-void HTMLMarkupBuilderPlugin::insertImage(const QString &url, qreal width, qreal height)
+void HTMLMarkupBuilder::insertImage(const QString &url, qreal width, qreal height)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<img src=\"%1\" ").arg(url));
+    if (width != 0) {
+        d->html.append(QStringLiteral("width=\"%2\" ").arg(width));
+    }
+    if (height != 0) {
+        d->html.append(QStringLiteral("height=\"%2\" ").arg(height));
+    }
+    d->html.append(QStringLiteral("/>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginList(QTextListFormat::Style style)
+void HTMLMarkupBuilder::beginList(QTextListFormat::Style style)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->currentListItemStyles.append(style);
+    switch (style) {
+    case QTextListFormat::ListDisc:
+        d->html.append(QStringLiteral("<ul type=\"disc\">"));
+        break;
+    case QTextListFormat::ListCircle:
+        d->html.append(QStringLiteral("<ul type=\"circle\">"));
+        break;
+    case QTextListFormat::ListSquare:
+        d->html.append(QStringLiteral("<ul type=\"square\">"));
+        break;
+    case QTextListFormat::ListDecimal:
+        d->html.append(QStringLiteral("<ol type=\"1\">"));
+        break;
+    case QTextListFormat::ListLowerAlpha:
+        d->html.append(QStringLiteral("<ol type=\"a\">"));
+        break;
+    case QTextListFormat::ListUpperAlpha:
+        d->html.append(QStringLiteral("<ol type=\"A\">"));
+        break;
+    case QTextListFormat::ListLowerRoman:
+        d->html.append(QStringLiteral("<ol type=\"i\">"));
+        break;
+    case QTextListFormat::ListUpperRoman:
+        d->html.append(QStringLiteral("<ol type=\"I\">"));
+        break;
+    default:
+        break;
+    }
 }
 
-void HTMLMarkupBuilderPlugin::endList()
+void HTMLMarkupBuilder::endList()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    switch (d->currentListItemStyles.last()) {
+    case QTextListFormat::ListDisc:
+    case QTextListFormat::ListCircle:
+    case QTextListFormat::ListSquare:
+        d->html.append(QStringLiteral("</ul>"));
+        break;
+    case QTextListFormat::ListDecimal:
+    case QTextListFormat::ListLowerAlpha:
+    case QTextListFormat::ListUpperAlpha:
+    case QTextListFormat::ListLowerRoman:
+    case QTextListFormat::ListUpperRoman:
+        d->html.append(QStringLiteral("</ol>"));
+        break;
+    default:
+        break;
+    }
+    d->currentListItemStyles.removeLast();
 }
 
-void HTMLMarkupBuilderPlugin::beginListItem()
+void HTMLMarkupBuilder::beginListItem()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<li>"));
 }
 
-void HTMLMarkupBuilderPlugin::endListItem()
+void HTMLMarkupBuilder::endListItem()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</li>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginSuperscript()
+void HTMLMarkupBuilder::beginSuperscript()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<sup>"));
 }
 
-void HTMLMarkupBuilderPlugin::endSuperscript()
+void HTMLMarkupBuilder::endSuperscript()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</sup>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginSubscript()
+void HTMLMarkupBuilder::beginSubscript()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<sub>"));
 }
 
-void HTMLMarkupBuilderPlugin::endSubscript()
+void HTMLMarkupBuilder::endSubscript()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</sub>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginTable(qreal cellpadding, qreal cellspacing, const QString &width)
+void HTMLMarkupBuilder::beginTable(qreal cellpadding, qreal cellspacing, const QString &width)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<table cellpadding=\"%1\" cellspacing=\"%2\" width=\"%3\" border=\"1\">")
+                   .arg(cellpadding)
+                   .arg(cellspacing)
+                   .arg(width));
 }
 
-void HTMLMarkupBuilderPlugin::beginTableRow()
+void HTMLMarkupBuilder::beginTableRow()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<tr>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginTableHeaderCell(const QString &width, int colSpan, int rowSpan)
+void HTMLMarkupBuilder::beginTableHeaderCell(const QString &width, int colSpan, int rowSpan)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<th width=\"%1\" colspan=\"%2\" rowspan=\"%3\">")
+                   .arg(width)
+                   .arg(colSpan)
+                   .arg(rowSpan));
 }
 
-void HTMLMarkupBuilderPlugin::beginTableCell(const QString &width, int colSpan, int rowSpan)
+void HTMLMarkupBuilder::beginTableCell(const QString &width, int colSpan, int rowSpan)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("<td width=\"%1\" colspan=\"%2\" rowspan=\"%3\">")
+                   .arg(width)
+                   .arg(colSpan)
+                   .arg(rowSpan));
 }
 
-void HTMLMarkupBuilderPlugin::endTable()
+void HTMLMarkupBuilder::endTable()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</table>"));
 }
 
-void HTMLMarkupBuilderPlugin::endTableRow()
+void HTMLMarkupBuilder::endTableRow()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</tr>"));
 }
 
-void HTMLMarkupBuilderPlugin::endTableHeaderCell()
+void HTMLMarkupBuilder::endTableHeaderCell()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</th>"));
 }
 
-void HTMLMarkupBuilderPlugin::endTableCell()
+void HTMLMarkupBuilder::endTableCell()
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(QStringLiteral("</td>"));
 }
 
-void HTMLMarkupBuilderPlugin::beginHeader(int level)
+void HTMLMarkupBuilder::beginHeader(int level)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    switch (level) {
+    case 1:
+        d->html.append(QStringLiteral("<h1>"));
+        break;
+    case 2:
+        d->html.append(QStringLiteral("<h2>"));
+        break;
+    case 3:
+        d->html.append(QStringLiteral("<h3>"));
+        break;
+    case 4:
+        d->html.append(QStringLiteral("<h4>"));
+        break;
+    case 5:
+        d->html.append(QStringLiteral("<h5>"));
+        break;
+    case 6:
+        d->html.append(QStringLiteral("<h6>"));
+        break;
+    default:
+        break;
+    }
 }
 
-void HTMLMarkupBuilderPlugin::endHeader(int level)
+void HTMLMarkupBuilder::endHeader(int level)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    switch (level) {
+    case 1:
+        d->html.append(QStringLiteral("</h1>"));
+        break;
+    case 2:
+        d->html.append(QStringLiteral("</h2>"));
+        break;
+    case 3:
+        d->html.append(QStringLiteral("</h3>"));
+        break;
+    case 4:
+        d->html.append(QStringLiteral("</h4>"));
+        break;
+    case 5:
+        d->html.append(QStringLiteral("</h5>"));
+        break;
+    case 6:
+        d->html.append(QStringLiteral("</h6>"));
+        break;
+    default:
+        break;
+    }
 }
 
-void HTMLMarkupBuilderPlugin::appendLiteralText(const QString &text)
+void HTMLMarkupBuilder::appendLiteralText(const QString &text)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(text.toHtmlEscaped());
 }
 
-void HTMLMarkupBuilderPlugin::appendRawText(const QString &text)
+void HTMLMarkupBuilder::appendRawText(const QString &text)
 {
-
+    Q_D(HTMLMarkupBuilder);
+    d->html.append(text);
 }
 
-QString HTMLMarkupBuilderPlugin::getResult()
+QString HTMLMarkupBuilder::getResult()
 {
-    return "HTML";
+    Q_D(HTMLMarkupBuilder);
+    auto ret = d->html;
+    d->html.clear();
+    return ret;
 }

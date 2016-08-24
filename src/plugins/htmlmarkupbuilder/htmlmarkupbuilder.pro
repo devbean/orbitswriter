@@ -29,7 +29,8 @@ SOURCES += \
     htmlmarkupbuilderplugin.cpp
 
 HEADERS += \
-    htmlmarkupbuilderplugin.h
+    htmlmarkupbuilder.h \
+    htmlmarkupbuilder_p.h
 
 OTHER_FILES +=
 
