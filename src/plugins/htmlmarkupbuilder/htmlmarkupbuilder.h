@@ -27,7 +27,7 @@
 #include <Core/MarkupBuilder>
 #include <QObject>
 
-class HTMLMarkupBuilder : public QObject, Core::MarkupBuilder
+class HTMLMarkupBuilder : public Core::MarkupBuilder
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID MarkupBuilder_iid FILE "htmlmarkupbuilder.json")
@@ -35,8 +35,10 @@ class HTMLMarkupBuilder : public QObject, Core::MarkupBuilder
     Q_DECLARE_PRIVATE(HTMLMarkupBuilder)
     QScopedPointer<HTMLMarkupBuilderPrivate> const d_ptr;
 public:
-    HTMLMarkupBuilder(QObject *parent = 0);
+    HTMLMarkupBuilder();
     virtual ~HTMLMarkupBuilder() {}
+
+    virtual QString markupName() const Q_DECL_OVERRIDE;
 
     virtual QString name() const Q_DECL_OVERRIDE;
     virtual QString version() const Q_DECL_OVERRIDE;

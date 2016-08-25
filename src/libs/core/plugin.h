@@ -29,8 +29,9 @@
 namespace Core
 {
 
-class CORE_EXPORT Plugin
+class CORE_EXPORT Plugin : public QObject
 {
+    Q_OBJECT
 public:
     virtual ~Plugin() {}
 

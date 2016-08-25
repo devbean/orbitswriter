@@ -55,9 +55,12 @@ class AppContextPrivate : public QObject, public AppContextListener
     void writeSettings();
     void readSettings();
 
-    MainWindow *mainWindow;
+    // plugins
+    void loadBuilders();
+
     QSettings *settings;
     PluginManager *pluginManager;
+    MainWindow *mainWindow;
 
     QList<AppContextListener *> contextListeners;
 

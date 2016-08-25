@@ -20,6 +20,7 @@
  *-------------------------------------------------*/
 
 #include "appcontext.h"
+#include "document/markupbuilder.h"
 #include "mainwindow.h"
 #include "previewer.h"
 #include "sourceeditor.h"
@@ -27,6 +28,7 @@
 
 #include <QAction>
 #include <QCloseEvent>
+#include <QDebug>
 #include <QLineEdit>
 #include <QMenuBar>
 #include <QTabWidget>
@@ -162,7 +164,7 @@ void MainWindowPrivate::installEditorPane()
     titleEdit->setStyleSheet("border: 1px solid gray; padding:0 8px;");
     mainLayout->addWidget(titleEdit);
 
-    QTabWidget *editorTab = new QTabWidget(editorPane);
+    editorTab = new QTabWidget(editorPane);
     visualEditor = new VisualEditor(editorTab);
     visualEditor->setStyleSheet("border: 0");
     editorTab->addTab(visualEditor, tr("Visual"));
@@ -171,12 +173,22 @@ void MainWindowPrivate::installEditorPane()
     previewer->setStyleSheet("border: 0");
     editorTab->addTab(previewer, tr("Preview"));
 
-    sourceEditor = new SourceEditor(editorTab);
-    sourceEditor->setStyleSheet("border: 0");
-    editorTab->addTab(sourceEditor, tr("Source"));
     mainLayout->addWidget(editorTab);
 
     editorPane->setLayout(mainLayout);
+
+    connect(editorTab, &QTabWidget::currentChanged, [&] (int) {
+        SourceEditor *srcEditor = qobject_cast<SourceEditor *>(editorTab->currentWidget());
+        if (srcEditor) {
+            srcEditor->updateSource();
+        }
+    });
+}
+
+void MainWindowPrivate::appendSourceEditor(MarkupBuilder *builder)
+{
+    SourceEditor *sourceEditor = new SourceEditor(builder, editorTab);
+    editorTab->addTab(sourceEditor, builder->markupName());
 }
 
 } // end of namespace Core::Internal
@@ -197,7 +209,7 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 //    if (maybeSave()) {
-    AppContext::instance()->shutdown();
+        AppContext::instance()->shutdown();
         event->accept();
 //    } else {
 //        event->ignore();

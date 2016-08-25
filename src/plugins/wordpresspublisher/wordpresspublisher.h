@@ -1,17 +1,17 @@
-#ifndef WORDPRESSPUBLISHERPLUGIN_H
-#define WORDPRESSPUBLISHERPLUGIN_H
+#ifndef WORDPRESSPUBLISHER_H
+#define WORDPRESSPUBLISHER_H
 
 #include <Core/Publisher>
 #include <QObject>
 
-class WordPressPublisherPlugin : public QObject, Core::Publisher
+class WordPressPublisher : public Core::Publisher
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID Publisher_iid FILE "wordpresspublisher.json")
     Q_INTERFACES(Core::Publisher)
 public:
-    explicit WordPressPublisherPlugin(QObject *parent = 0);
-    virtual ~WordPressPublisherPlugin();
+    explicit WordPressPublisher();
+    virtual ~WordPressPublisher();
 
     virtual QString name() const;
     virtual QString version() const;
@@ -21,4 +21,4 @@ public:
     virtual QString targetVersion() const;
 };
 
-#endif // WORDPRESSPUBLISHERPLUGIN_H
+#endif // WORDPRESSPUBLISHER_H

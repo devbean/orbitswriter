@@ -30,11 +30,14 @@
 namespace Core
 {
 
+namespace Internal { class AppContextPrivate; }
+
 class CORE_EXPORT MainWindow : public QMainWindow
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(Internal::MainWindow)
     QScopedPointer<Internal::MainWindowPrivate> const d_ptr;
+    friend class Internal::AppContextPrivate;
 
 public:
     MainWindow(QWidget *parent = 0);

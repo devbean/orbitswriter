@@ -26,7 +26,7 @@ include(../plugin.pri)
 include(../../libs/core/core.pri)
 
 SOURCES += \
-    htmlmarkupbuilderplugin.cpp
+    htmlmarkupbuilder.cpp
 
 HEADERS += \
     htmlmarkupbuilder.h \

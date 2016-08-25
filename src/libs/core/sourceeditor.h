@@ -22,6 +22,8 @@
 #ifndef SOURCEEDITOR_H
 #define SOURCEEDITOR_H
 
+#include "document/markupbuilder.h"
+
 #include <QTextEdit>
 
 namespace Core
@@ -31,7 +33,12 @@ class SourceEditor : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit SourceEditor(QWidget *parent = 0);
+    explicit SourceEditor(MarkupBuilder *builder, QWidget *parent = 0);
+
+    void updateSource();
+
+private:
+    MarkupBuilder *builder;
 }; // end of class Core::SourceEditor
 
 } // end of namespace Core

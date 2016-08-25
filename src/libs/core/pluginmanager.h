@@ -29,11 +29,6 @@
 namespace Core
 {
 
-enum class PluginType : unsigned int {
-    MarkupBuilder,
-    Publisher
-};
-
 class PluginManager : public QObject
 {
     Q_OBJECT
@@ -45,13 +40,22 @@ public:
 
     void loadPlugins();
 
+    template <typename T> QList<T *> plugins() const
+    {
+        Q_D(const Internal::PluginManager);
+
+        QList<T *> results;
+        for (auto plugin : d->plugins) {
+            T *result = qobject_cast<T *>(plugin);
+            if (result) {
+                results.append(result);
+            }
+        }
+        return results;
+    }
+
 }; // end of class PluginManager
 
 } // end of namespace Core
-
-inline uint qHash(const Core::PluginType &type)
-{
-    return qHash((unsigned int)type);
-}
 
 #endif // PLUGINMANAGER_H

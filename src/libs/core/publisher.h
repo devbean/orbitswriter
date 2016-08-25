@@ -29,6 +29,7 @@ namespace Core
 
 class CORE_EXPORT Publisher : public Plugin
 {
+    Q_OBJECT
 public:
     virtual ~Publisher() {}
 

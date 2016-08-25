@@ -31,11 +31,15 @@ HTMLMarkupBuilderPrivate::HTMLMarkupBuilderPrivate(HTMLMarkupBuilder *builder)
 
 //---------- HTMLMarkupBuilder ----------//
 
-HTMLMarkupBuilder::HTMLMarkupBuilder(QObject *parent)
-    : QObject(parent),
-      d_ptr(new HTMLMarkupBuilderPrivate(this))
+HTMLMarkupBuilder::HTMLMarkupBuilder()
+    : d_ptr(new HTMLMarkupBuilderPrivate(this))
 {
 
+}
+
+QString HTMLMarkupBuilder::markupName() const
+{
+    return QStringLiteral("HTML");
 }
 
 QString HTMLMarkupBuilder::name() const

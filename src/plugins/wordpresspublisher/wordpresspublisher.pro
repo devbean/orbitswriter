@@ -26,10 +26,10 @@ include(../plugin.pri)
 include(../../libs/core/core.pri)
 
 SOURCES += \
-    wordpresspublisherplugin.cpp
+    wordpresspublisher.cpp
 
 HEADERS += \
-    wordpresspublisherplugin.h
+    wordpresspublisher.h
 
 OTHER_FILES +=
 

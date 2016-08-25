@@ -19,17 +19,26 @@
  *
  *-------------------------------------------------*/
 
+#include "document/markupgenerator.h"
 #include "sourceeditor.h"
+
+#include <QDebug>
 
 namespace Core
 {
 
 //---------- SourceEditor ----------//
 
-SourceEditor::SourceEditor(QWidget *parent)
-    : QTextEdit(parent)
+SourceEditor::SourceEditor(MarkupBuilder *builder, QWidget *parent)
+    : QTextEdit(parent),
+      builder(builder)
 {
+    setStyleSheet("border: 0");
+}
 
+void SourceEditor::updateSource()
+{
+    qDebug() << builder->name();
 }
 
 } // end of namespace Core

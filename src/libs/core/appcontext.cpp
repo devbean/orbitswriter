@@ -20,8 +20,12 @@
  *-------------------------------------------------*/
 
 #include "appcontext.h"
+#include "document/markupbuilder.h"
 #include "mainwindow.h"
+#include "plugin.h"
 #include "pluginmanager.h"
+
+#include <QDebug>
 
 namespace Core
 {
@@ -35,8 +39,8 @@ namespace Internal
 
 AppContextPrivate::AppContextPrivate(AppContext *ctx)
     : q_ptr(ctx),
-      mainWindow(new MainWindow),
-      pluginManager(new PluginManager)
+      pluginManager(new PluginManager),
+      mainWindow(new MainWindow)
 {
     contextListeners.append(this);
 }
@@ -50,6 +54,7 @@ AppContextPrivate::~AppContextPrivate()
 void AppContextPrivate::onAppContextStarted()
 {
     readSettings();
+    loadBuilders();
 }
 
 void AppContextPrivate::onAppContextAboutToExit()
@@ -75,6 +80,14 @@ void AppContextPrivate::readSettings()
     mainWindow->resize(settings->value(QLatin1String(SETTINGS_SIZE), QSize(1024, 768)).toSize());
     mainWindow->move(settings->value(QLatin1String(SETTINGS_POSITION), QPoint(200, 200)).toPoint());
     settings->endGroup();
+}
+
+void AppContextPrivate::loadBuilders()
+{
+    auto builders = pluginManager->plugins<MarkupBuilder>();
+    for (auto builder : builders) {
+        mainWindow->d_ptr->appendSourceEditor(builder);
+    }
 }
 
 } // end of namespace Core::Internal
@@ -125,10 +138,16 @@ void AppContext::setSettings(QSettings *settings)
     }
 }
 
-MainWindow *AppContext::mainWindow() const
+MainWindow * AppContext::mainWindow() const
 {
     Q_D(const Internal::AppContext);
     return d->mainWindow;
+}
+
+PluginManager * AppContext::pluginManager() const
+{
+    Q_D(const Internal::AppContext);
+    return d->pluginManager;
 }
 
 } // end of namespace Core

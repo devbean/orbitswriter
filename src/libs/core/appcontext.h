@@ -49,7 +49,8 @@ public:
     // settings
     void setSettings(QSettings *settings);
 
-    MainWindow *mainWindow() const;
+    MainWindow * mainWindow() const;
+    PluginManager * pluginManager() const;
 }; // end of class Core::AppContext
 
 } // end of namespace Core

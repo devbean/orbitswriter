@@ -22,7 +22,7 @@
 #ifndef PLUGINMANAGER_P_H
 #define PLUGINMANAGER_P_H
 
-#include <QMultiHash>
+#include <QList>
 #include <QObject>
 
 namespace Core
@@ -30,7 +30,6 @@ namespace Core
 
 class Plugin;
 class PluginManager;
-enum class PluginType : unsigned int;
 
 namespace Internal
 {
@@ -46,7 +45,7 @@ class PluginManagerPrivate : public QObject
 
     void loadPlugins();
 
-    QMultiHash<PluginType, Plugin *> plugins;
+    QList<Plugin *> plugins;
 
 }; // end of class Core::Internal::PluginManagerPrivate
 

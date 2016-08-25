@@ -48,16 +48,10 @@ void PluginManagerPrivate::loadPlugins()
 
     foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
         QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
-        QObject *plugin = pluginLoader.instance();
-        if (plugin) {
-            MarkupBuilder *builder = qobject_cast<MarkupBuilder *>(plugin);
-            if (builder) {
-                plugins.insert(PluginType::MarkupBuilder, builder);
-            }
-            Publisher *publisher = qobject_cast<Publisher *>(plugin);
-            if (publisher) {
-                plugins.insert(PluginType::Publisher, publisher);
-            }
+        QObject *obj = pluginLoader.instance();
+        if (obj) {
+            Plugin *plugin = qobject_cast<Plugin *>(obj);
+            plugins.append(plugin);
         } else {
             qDebug() << pluginLoader.errorString();
         }
@@ -82,10 +76,7 @@ PluginManager::PluginManager(QObject *parent)
 void PluginManager::loadPlugins()
 {
     Q_D(Internal::PluginManager);
-
     d->loadPlugins();
-
-    qDebug() << d->plugins.size();
 }
 
 }

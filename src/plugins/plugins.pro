@@ -22,5 +22,6 @@
 TEMPLATE = subdirs
 CONFIG  += ordered
 SUBDIRS  = \
+    mdmarkupbuilder \
     htmlmarkupbuilder \
     wordpresspublisher

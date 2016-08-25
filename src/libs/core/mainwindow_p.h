@@ -25,12 +25,14 @@
 #include <QObject>
 
 class QAction;
+class QTabWidget;
 
 namespace Core
 {
 
 class ActionManager;
 class MainWindow;
+class MarkupBuilder;
 class Previewer;
 class SourceEditor;
 class VisualEditor;
@@ -38,12 +40,15 @@ class VisualEditor;
 namespace Internal
 {
 
+class AppContextPrivate;
+
 class MainWindowPrivate : public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(MainWindowPrivate)
     Q_DECLARE_PUBLIC(Core::MainWindow)
     MainWindow * const q_ptr;
+    friend class AppContextPrivate;
 
     MainWindowPrivate(MainWindow *win);
 
@@ -51,6 +56,8 @@ class MainWindowPrivate : public QObject
     void installMenuBar();
     void installToolBar();
     void installEditorPane();
+
+    void appendSourceEditor(MarkupBuilder *builder);
 
     ActionManager *actionManager;
 
@@ -68,8 +75,8 @@ class MainWindowPrivate : public QObject
     QAction *helpAction;
     QAction *aboutAction;
 
+    QTabWidget *editorTab;
     Previewer *previewer;
-    SourceEditor *sourceEditor;
     VisualEditor *visualEditor;
 }; // end of class Core::Internal::MainWindowPrivate
 

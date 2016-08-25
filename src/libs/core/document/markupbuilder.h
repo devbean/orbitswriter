@@ -33,8 +33,14 @@ namespace Core
 
 class CORE_EXPORT MarkupBuilder : public Plugin
 {
+    Q_OBJECT
 public:
     virtual ~MarkupBuilder() {}
+
+    /*!
+     * Markup language name.
+     */
+    virtual QString markupName() const = 0;
 
     /*!
      * Begin a bold element in the markup.
