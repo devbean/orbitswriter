@@ -19,28 +19,24 @@
  *
  *-------------------------------------------------*/
 
-#include "document/markupgenerator.h"
-#include "sourceeditor.h"
+#ifndef MDMARKUPBUILDER_P_H
+#define MDMARKUPBUILDER_P_H
 
-#include <QDebug>
+#include <QList>
+#include <QTextListFormat>
 
-namespace Core
+class MDMarkupBuilder;
+
+class MDMarkupBuilderPrivate
 {
+    Q_DISABLE_COPY(MDMarkupBuilderPrivate)
+    Q_DECLARE_PUBLIC(MDMarkupBuilder)
+    MDMarkupBuilder * const q_ptr;
 
-//---------- SourceEditor ----------//
+    MDMarkupBuilderPrivate(MDMarkupBuilder *builder);
 
-SourceEditor::SourceEditor(MarkupBuilder *builder, QWidget *parent)
-    : QTextEdit(parent),
-      builder(builder)
-{
-    setStyleSheet("border: 0");
-}
+    QList<QTextListFormat::Style> currentListItemStyles;
+    QString html;
+}; // end of class MDMarkupBuilderPrivate
 
-void SourceEditor::updateSource(QTextDocument *document)
-{
-    MarkupGenerator gen(builder);
-    gen.processDocument(document);
-    setPlainText(builder->result());
-}
-
-} // end of namespace Core
+#endif // MDMARKUPBUILDER_P_H

@@ -166,11 +166,9 @@ void MainWindowPrivate::installEditorPane()
 
     editorTab = new QTabWidget(editorPane);
     visualEditor = new VisualEditor(editorTab);
-    visualEditor->setStyleSheet("border: 0");
     editorTab->addTab(visualEditor, tr("Visual"));
 
     previewer = new Previewer(editorTab);
-    previewer->setStyleSheet("border: 0");
     editorTab->addTab(previewer, tr("Preview"));
 
     mainLayout->addWidget(editorTab);
@@ -180,7 +178,7 @@ void MainWindowPrivate::installEditorPane()
     connect(editorTab, &QTabWidget::currentChanged, [&] (int) {
         SourceEditor *srcEditor = qobject_cast<SourceEditor *>(editorTab->currentWidget());
         if (srcEditor) {
-            srcEditor->updateSource();
+            srcEditor->updateSource(visualEditor->document());
         }
     });
 }

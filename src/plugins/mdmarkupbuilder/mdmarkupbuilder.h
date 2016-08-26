@@ -19,24 +19,24 @@
  *
  *-------------------------------------------------*/
 
-#ifndef HTMLMARKUPBUILDER_H
-#define HTMLMARKUPBUILDER_H
+#ifndef MDMARKUPBUILDER_H
+#define MDMARKUPBUILDER_H
 
-#include "htmlmarkupbuilder_p.h"
+#include "mdmarkupbuilder_p.h"
 
 #include <Core/MarkupBuilder>
 #include <QObject>
 
-class HTMLMarkupBuilder : public Core::MarkupBuilder
+class MDMarkupBuilder : public Core::MarkupBuilder
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID MarkupBuilder_iid FILE "htmlmarkupbuilder.json")
+    Q_PLUGIN_METADATA(IID MarkupBuilder_iid FILE "mdmarkupbuilder.json")
     Q_INTERFACES(Core::MarkupBuilder)
-    Q_DECLARE_PRIVATE(HTMLMarkupBuilder)
-    QScopedPointer<HTMLMarkupBuilderPrivate> const d_ptr;
+    Q_DECLARE_PRIVATE(MDMarkupBuilder)
+    QScopedPointer<MDMarkupBuilderPrivate> const d_ptr;
 public:
-    HTMLMarkupBuilder();
-    virtual ~HTMLMarkupBuilder() {}
+    MDMarkupBuilder();
+    virtual ~MDMarkupBuilder() {}
 
     virtual QString markupName() const Q_DECL_OVERRIDE;
 
@@ -111,4 +111,4 @@ public:
     virtual QString result() Q_DECL_OVERRIDE;
 };
 
-#endif // HTMLMARKUPBUILDER_H
+#endif // MDMARKUPBUILDER_H

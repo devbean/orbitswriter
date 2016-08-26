@@ -326,7 +326,7 @@ public:
      *
      * \return The fully marked up text.
      */
-    virtual QString getResult() = 0;
+    virtual QString result() = 0;
 }; // end of class Core::MarkupBuilder
 
 } // end of namespace Core

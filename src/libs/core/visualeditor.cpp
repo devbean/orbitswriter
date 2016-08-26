@@ -29,7 +29,7 @@ namespace Core
 VisualEditor::VisualEditor(QWidget *parent)
     : QTextEdit(parent)
 {
-
+    setStyleSheet("border: 0");
 }
 
 } // end of namespace Core

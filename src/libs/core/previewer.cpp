@@ -29,7 +29,7 @@ namespace Core
 Previewer::Previewer(QWidget *parent)
     : QTextEdit(parent)
 {
-
+    setStyleSheet("border: 0");
 }
 
 } // end of namespace Core

@@ -39,7 +39,6 @@ MarkupGeneratorPrivate::MarkupGeneratorPrivate(MarkupGenerator *gen)
 
 MarkupGeneratorPrivate::~MarkupGeneratorPrivate()
 {
-    delete this->builder;
 }
 
 } // end of namespace Internal

@@ -35,7 +35,7 @@ class SourceEditor : public QTextEdit
 public:
     explicit SourceEditor(MarkupBuilder *builder, QWidget *parent = 0);
 
-    void updateSource();
+    void updateSource(QTextDocument *document);
 
 private:
     MarkupBuilder *builder;

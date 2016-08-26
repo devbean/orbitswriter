@@ -19,121 +19,119 @@
  *
  *-------------------------------------------------*/
 
-#include "htmlmarkupbuilder.h"
+#include "mdmarkupbuilder.h"
 
-#include <QDebug>
+//---------- MDMarkupBuilderPrivate ----------//
 
-//---------- HTMLMarkupBuilderPrivate ----------//
-
-HTMLMarkupBuilderPrivate::HTMLMarkupBuilderPrivate(HTMLMarkupBuilder *builder)
+MDMarkupBuilderPrivate::MDMarkupBuilderPrivate(MDMarkupBuilder *builder)
     : q_ptr(builder)
 {
 
 }
 
-//---------- HTMLMarkupBuilder ----------//
+//---------- MDMarkupBuilder ----------//
 
-HTMLMarkupBuilder::HTMLMarkupBuilder()
-    : d_ptr(new HTMLMarkupBuilderPrivate(this))
+MDMarkupBuilder::MDMarkupBuilder()
+    : d_ptr(new MDMarkupBuilderPrivate(this))
 {
 
 }
 
-QString HTMLMarkupBuilder::markupName() const
+QString MDMarkupBuilder::markupName() const
 {
-    return QStringLiteral("HTML");
+    return QStringLiteral("Markdown");
 }
 
-QString HTMLMarkupBuilder::name() const
+QString MDMarkupBuilder::name() const
 {
-    return QStringLiteral("HtmlMarkupBuilder");
+    return QStringLiteral("MDMarkupBuilder");
 }
 
-QString HTMLMarkupBuilder::version() const
+QString MDMarkupBuilder::version() const
 {
     return QStringLiteral("1.0.0");
 }
 
-QString HTMLMarkupBuilder::vendor() const
+QString MDMarkupBuilder::vendor() const
 {
     return QStringLiteral("galaxyworld.org");
 }
 
-void HTMLMarkupBuilder::beginStrong()
+void MDMarkupBuilder::beginStrong()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<strong>"));
 }
 
-void HTMLMarkupBuilder::endStrong()
+void MDMarkupBuilder::endStrong()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</strong>"));
 }
 
-void HTMLMarkupBuilder::beginEmphasised()
+void MDMarkupBuilder::beginEmphasised()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<em>"));
 }
 
-void HTMLMarkupBuilder::endEmphasised()
+void MDMarkupBuilder::endEmphasised()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</em>"));
 }
 
-void HTMLMarkupBuilder::beginUnderline()
+void MDMarkupBuilder::beginUnderline()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<u>"));
 }
 
-void HTMLMarkupBuilder::endUnderline()
+void MDMarkupBuilder::endUnderline()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</u>"));
 }
 
-void HTMLMarkupBuilder::beginStrikeout()
+void MDMarkupBuilder::beginStrikeout()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<s>"));
 }
 
-void HTMLMarkupBuilder::endStrikeout()
+void MDMarkupBuilder::endStrikeout()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</s>"));
 }
 
-void HTMLMarkupBuilder::beginForeground(const QBrush &brush)
+void MDMarkupBuilder::beginForeground(const QBrush &brush)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<span style=\"color:%1;\">").arg(brush.color().name()));
 }
 
-void HTMLMarkupBuilder::endForeground()
+void MDMarkupBuilder::endForeground()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilder::beginBackground(const QBrush &brush)
+void MDMarkupBuilder::beginBackground(const QBrush &brush)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<span style=\"background-color:%1;\">").arg(brush.color().name()));
 }
 
-void HTMLMarkupBuilder::endBackground()
+void MDMarkupBuilder::endBackground()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilder::beginAnchor(const QString &href, const QString &name)
+void MDMarkupBuilder::beginAnchor(const QString &href, const QString &name)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     if (!href.isEmpty()) {
         if (!name.isEmpty()) {
             d->html.append(QStringLiteral("<a href=\"%1\" name=\"%2\">").arg(href, name));
@@ -147,39 +145,39 @@ void HTMLMarkupBuilder::beginAnchor(const QString &href, const QString &name)
     }
 }
 
-void HTMLMarkupBuilder::endAnchor()
+void MDMarkupBuilder::endAnchor()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</a>"));
 }
 
-void HTMLMarkupBuilder::beginFontFamily(const QString &family)
+void MDMarkupBuilder::beginFontFamily(const QString &family)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<span style=\"font-family:%1;\">").arg(family));
 }
 
-void HTMLMarkupBuilder::endFontFamily()
+void MDMarkupBuilder::endFontFamily()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilder::beginFontPointSize(int size)
+void MDMarkupBuilder::beginFontPointSize(int size)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<span style=\"font-size:%1pt;\">").arg(QString::number(size)));
 }
 
-void HTMLMarkupBuilder::endFontPointSize()
+void MDMarkupBuilder::endFontPointSize()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</span>"));
 }
 
-void HTMLMarkupBuilder::beginParagraph(Qt::Alignment a, qreal top, qreal bottom, qreal left, qreal right)
+void MDMarkupBuilder::beginParagraph(Qt::Alignment a, qreal top, qreal bottom, qreal left, qreal right)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     QString style;
     if (top != 0) {
         style.append(QStringLiteral("margin-top:%1;").arg(top));
@@ -212,30 +210,30 @@ void HTMLMarkupBuilder::beginParagraph(Qt::Alignment a, qreal top, qreal bottom,
     d->html.append(QLatin1Char('>'));
 }
 
-void HTMLMarkupBuilder::endParagraph()
+void MDMarkupBuilder::endParagraph()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</p>"));
 }
 
-void HTMLMarkupBuilder::addNewline()
+void MDMarkupBuilder::addNewline()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<br />"));
 }
 
-void HTMLMarkupBuilder::insertHorizontalRule(int width)
+void MDMarkupBuilder::insertHorizontalRule(int width)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     if (width != -1) {
         d->html.append(QStringLiteral("<hr width=\"%1\" />").arg(width));
     }
     d->html.append(QStringLiteral("<hr />"));
 }
 
-void HTMLMarkupBuilder::insertImage(const QString &url, qreal width, qreal height)
+void MDMarkupBuilder::insertImage(const QString &url, qreal width, qreal height)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<img src=\"%1\" ").arg(url));
     if (width != 0) {
         d->html.append(QStringLiteral("width=\"%2\" ").arg(width));
@@ -246,9 +244,9 @@ void HTMLMarkupBuilder::insertImage(const QString &url, qreal width, qreal heigh
     d->html.append(QStringLiteral("/>"));
 }
 
-void HTMLMarkupBuilder::beginList(QTextListFormat::Style style)
+void MDMarkupBuilder::beginList(QTextListFormat::Style style)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->currentListItemStyles.append(style);
     switch (style) {
     case QTextListFormat::ListDisc:
@@ -280,9 +278,9 @@ void HTMLMarkupBuilder::beginList(QTextListFormat::Style style)
     }
 }
 
-void HTMLMarkupBuilder::endList()
+void MDMarkupBuilder::endList()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     switch (d->currentListItemStyles.last()) {
     case QTextListFormat::ListDisc:
     case QTextListFormat::ListCircle:
@@ -302,102 +300,102 @@ void HTMLMarkupBuilder::endList()
     d->currentListItemStyles.removeLast();
 }
 
-void HTMLMarkupBuilder::beginListItem()
+void MDMarkupBuilder::beginListItem()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<li>"));
 }
 
-void HTMLMarkupBuilder::endListItem()
+void MDMarkupBuilder::endListItem()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</li>"));
 }
 
-void HTMLMarkupBuilder::beginSuperscript()
+void MDMarkupBuilder::beginSuperscript()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<sup>"));
 }
 
-void HTMLMarkupBuilder::endSuperscript()
+void MDMarkupBuilder::endSuperscript()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</sup>"));
 }
 
-void HTMLMarkupBuilder::beginSubscript()
+void MDMarkupBuilder::beginSubscript()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<sub>"));
 }
 
-void HTMLMarkupBuilder::endSubscript()
+void MDMarkupBuilder::endSubscript()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</sub>"));
 }
 
-void HTMLMarkupBuilder::beginTable(qreal cellpadding, qreal cellspacing, const QString &width)
+void MDMarkupBuilder::beginTable(qreal cellpadding, qreal cellspacing, const QString &width)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<table cellpadding=\"%1\" cellspacing=\"%2\" width=\"%3\" border=\"1\">")
                    .arg(cellpadding)
                    .arg(cellspacing)
                    .arg(width));
 }
 
-void HTMLMarkupBuilder::beginTableRow()
+void MDMarkupBuilder::beginTableRow()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<tr>"));
 }
 
-void HTMLMarkupBuilder::beginTableHeaderCell(const QString &width, int colSpan, int rowSpan)
+void MDMarkupBuilder::beginTableHeaderCell(const QString &width, int colSpan, int rowSpan)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<th width=\"%1\" colspan=\"%2\" rowspan=\"%3\">")
                    .arg(width)
                    .arg(colSpan)
                    .arg(rowSpan));
 }
 
-void HTMLMarkupBuilder::beginTableCell(const QString &width, int colSpan, int rowSpan)
+void MDMarkupBuilder::beginTableCell(const QString &width, int colSpan, int rowSpan)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("<td width=\"%1\" colspan=\"%2\" rowspan=\"%3\">")
                    .arg(width)
                    .arg(colSpan)
                    .arg(rowSpan));
 }
 
-void HTMLMarkupBuilder::endTable()
+void MDMarkupBuilder::endTable()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</table>"));
 }
 
-void HTMLMarkupBuilder::endTableRow()
+void MDMarkupBuilder::endTableRow()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</tr>"));
 }
 
-void HTMLMarkupBuilder::endTableHeaderCell()
+void MDMarkupBuilder::endTableHeaderCell()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</th>"));
 }
 
-void HTMLMarkupBuilder::endTableCell()
+void MDMarkupBuilder::endTableCell()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(QStringLiteral("</td>"));
 }
 
-void HTMLMarkupBuilder::beginHeader(int level)
+void MDMarkupBuilder::beginHeader(int level)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     switch (level) {
     case 1:
         d->html.append(QStringLiteral("<h1>"));
@@ -422,9 +420,9 @@ void HTMLMarkupBuilder::beginHeader(int level)
     }
 }
 
-void HTMLMarkupBuilder::endHeader(int level)
+void MDMarkupBuilder::endHeader(int level)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     switch (level) {
     case 1:
         d->html.append(QStringLiteral("</h1>"));
@@ -449,21 +447,21 @@ void HTMLMarkupBuilder::endHeader(int level)
     }
 }
 
-void HTMLMarkupBuilder::appendLiteralText(const QString &text)
+void MDMarkupBuilder::appendLiteralText(const QString &text)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(text.toHtmlEscaped());
 }
 
-void HTMLMarkupBuilder::appendRawText(const QString &text)
+void MDMarkupBuilder::appendRawText(const QString &text)
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     d->html.append(text);
 }
 
-QString HTMLMarkupBuilder::result()
+QString MDMarkupBuilder::result()
 {
-    Q_D(HTMLMarkupBuilder);
+    Q_D(MDMarkupBuilder);
     auto ret = d->html;
     d->html.clear();
     return ret;
