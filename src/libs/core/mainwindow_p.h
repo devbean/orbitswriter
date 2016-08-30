@@ -75,6 +75,21 @@ class MainWindowPrivate : public QObject
     QAction *helpAction;
     QAction *aboutAction;
 
+    QAction *alignJustifyAction;
+    QAction *alignCenterAction;
+    QAction *alignLeftAction;
+    QAction *alignRightAction;
+
+    QAction *fontBoldAction;
+    QAction *fontItalicAction;
+    QAction *fontUnderlineAction;
+    QAction *fontStrikeoutAction;
+    QAction *fontColorAction;
+    QAction *fontBackgroundColorAction;
+
+    QAction *bulletListAction;
+    QAction *numberingListAction;
+
     QTabWidget *editorTab;
     Previewer *previewer;
     VisualEditor *visualEditor;

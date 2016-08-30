@@ -8,5 +8,17 @@
         <file alias="paste">img/paste.png</file>
         <file alias="save">img/save.png</file>
         <file alias="settings">img/settings.png</file>
+        <file alias="align_center">img/align_center.png</file>
+        <file alias="align_justify">img/align_justify.png</file>
+        <file alias="align_left">img/align_left.png</file>
+        <file alias="align_right">img/align_right.png</file>
+        <file alias="ul">img/bullet.png</file>
+        <file alias="font_background_color">img/fill.png</file>
+        <file alias="font_bold">img/font_bold.png</file>
+        <file alias="font_color">img/font_color.png</file>
+        <file alias="font_italic">img/font_italic.png</file>
+        <file alias="font_strikeout">img/font_strikethrough.png</file>
+        <file alias="font_underline">img/font_underlined.png</file>
+        <file alias="ol">img/numbering.png</file>
     </qresource>
 </RCC>

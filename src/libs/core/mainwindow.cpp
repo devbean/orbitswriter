@@ -27,6 +27,7 @@
 #include "visualeditor.h"
 
 #include <QAction>
+#include <QApplication>
 #include <QCloseEvent>
 #include <QDebug>
 #include <QLineEdit>
@@ -101,6 +102,57 @@ void MainWindowPrivate::initActions()
 
     aboutAction = new QAction(q);
     aboutAction->setText(tr("About"));
+
+    alignJustifyAction = new QAction(q);
+    alignJustifyAction->setText(tr("Align Justify"));
+    alignJustifyAction->setIcon(QIcon(":/icon/align_justify"));
+
+    alignCenterAction = new QAction(q);
+    alignCenterAction->setText(tr("Align Center"));
+    alignCenterAction->setIcon(QIcon(":/icon/align_center"));
+
+    alignLeftAction = new QAction(q);
+    alignLeftAction->setText(tr("Align Left"));
+    alignLeftAction->setIcon(QIcon(":/icon/align_left"));
+
+    alignRightAction = new QAction(q);
+    alignRightAction->setText(tr("Align Right"));
+    alignRightAction->setIcon(QIcon(":/icon/align_right"));
+
+    fontBoldAction = new QAction(q);
+    fontBoldAction->setText(tr("Bold"));
+    fontBoldAction->setIcon(QIcon(":/icon/font_bold"));
+    fontBoldAction->setShortcut(QKeySequence::Bold);
+
+    fontItalicAction = new QAction(q);
+    fontItalicAction->setText(tr("Italic"));
+    fontItalicAction->setIcon(QIcon(":/icon/font_italic"));
+    fontItalicAction->setShortcut(QKeySequence::Italic);
+
+    fontUnderlineAction = new QAction(q);
+    fontUnderlineAction->setText(tr("Underline"));
+    fontUnderlineAction->setIcon(QIcon(":/icon/font_underline"));
+    fontUnderlineAction->setShortcut(QKeySequence::Underline);
+
+    fontStrikeoutAction = new QAction(q);
+    fontStrikeoutAction->setText(tr("Strike Out"));
+    fontStrikeoutAction->setIcon(QIcon(":/icon/font_strikeout"));
+
+    fontColorAction = new QAction(q);
+    fontColorAction->setText(tr("Text Color"));
+    fontColorAction->setIcon(QIcon(":/icon/font_color"));
+
+    fontBackgroundColorAction = new QAction(q);
+    fontBackgroundColorAction->setText(tr("Text Background Color"));
+    fontBackgroundColorAction->setIcon(QIcon(":/icon/font_background_color"));
+
+    bulletListAction = new QAction(q);
+    bulletListAction->setText(tr("Bullet List"));
+    bulletListAction->setIcon(QIcon(":/icon/ul"));
+
+    numberingListAction = new QAction(q);
+    numberingListAction->setText(tr("Numbering List"));
+    numberingListAction->setIcon(QIcon(":/icon/ol"));
 }
 
 void MainWindowPrivate::installMenuBar()
@@ -134,7 +186,7 @@ void MainWindowPrivate::installToolBar()
     Q_Q(MainWindow);
 
     QToolBar *mainToolBar = new QToolBar(q);
-    mainToolBar->setMovable(false);
+    mainToolBar->setWindowTitle(tr("Main Tool Bar"));
     q->addToolBar(Qt::TopToolBarArea, mainToolBar);
 
     mainToolBar->addAction(newAction);
@@ -146,6 +198,32 @@ void MainWindowPrivate::installToolBar()
     mainToolBar->addAction(pasteAction);
     mainToolBar->addSeparator();
     mainToolBar->addAction(settingsAction);
+
+    QToolBar *editToolBar = new QToolBar(q);
+    editToolBar->setWindowTitle(tr("Edit Tool Bar"));
+    q->addToolBar(Qt::TopToolBarArea, editToolBar);
+
+    editToolBar->addAction(fontBoldAction);
+    editToolBar->addAction(fontItalicAction);
+    editToolBar->addAction(fontStrikeoutAction);
+    editToolBar->addAction(fontUnderlineAction);
+    editToolBar->addSeparator();
+    editToolBar->addAction(fontColorAction);
+    editToolBar->addAction(fontBackgroundColorAction);
+    editToolBar->addSeparator();
+    editToolBar->addAction(alignJustifyAction);
+    if (QApplication::isRightToLeft()) {
+        editToolBar->addAction(alignRightAction);
+        editToolBar->addAction(alignCenterAction);
+        editToolBar->addAction(alignLeftAction);
+    } else {
+        editToolBar->addAction(alignLeftAction);
+        editToolBar->addAction(alignCenterAction);
+        editToolBar->addAction(alignRightAction);
+    }
+    editToolBar->addSeparator();
+    editToolBar->addAction(bulletListAction);
+    editToolBar->addAction(numberingListAction);
 }
 
 void MainWindowPrivate::installEditorPane()
