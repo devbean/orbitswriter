@@ -52,7 +52,8 @@ HEADERS  += \
     pluginmanager.h \
     pluginmanager_p.h \
     plugin.h \
-    publisher.h
+    publisher.h \
+    editorwidget.h
 
 RESOURCES += \
     core.qrc

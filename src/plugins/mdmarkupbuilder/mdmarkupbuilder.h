@@ -25,9 +25,10 @@
 #include "mdmarkupbuilder_p.h"
 
 #include <Core/MarkupBuilder>
+#include <Core/Plugin>
 #include <QObject>
 
-class MDMarkupBuilder : public Core::MarkupBuilder
+class MDMarkupBuilder : public Core::Plugin, public Core::MarkupBuilder
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID MarkupBuilder_iid FILE "mdmarkupbuilder.json")

@@ -22,7 +22,7 @@
 #ifndef MARKUPBUILDER_H
 #define MARKUPBUILDER_H
 
-#include "core/plugin.h"
+#include "core/core_global.h"
 
 #include <QTextListFormat>
 
@@ -31,9 +31,8 @@ class QBrush;
 namespace Core
 {
 
-class CORE_EXPORT MarkupBuilder : public Plugin
+class MarkupBuilder
 {
-    Q_OBJECT
 public:
     virtual ~MarkupBuilder() {}
 

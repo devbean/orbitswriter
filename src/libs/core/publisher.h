@@ -22,19 +22,21 @@
 #ifndef PUBLISHER_H
 #define PUBLISHER_H
 
-#include "core/plugin.h"
+#include "core/core_global.h"
+
+#include <QtPlugin>
 
 namespace Core
 {
 
-class CORE_EXPORT Publisher : public Plugin
+class Publisher
 {
-    Q_OBJECT
 public:
     virtual ~Publisher() {}
 
     virtual QString targetName() const = 0;
     virtual QString targetVersion() const = 0;
+
 }; // end of class Core::Publisher
 
 } // end of namespace Core

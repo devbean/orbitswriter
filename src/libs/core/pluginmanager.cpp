@@ -19,9 +19,8 @@
  *
  *-------------------------------------------------*/
 
-#include "document/markupbuilder.h"
+#include "plugin.h"
 #include "pluginmanager.h"
-#include "publisher.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -51,7 +50,12 @@ void PluginManagerPrivate::loadPlugins()
         QObject *obj = pluginLoader.instance();
         if (obj) {
             Plugin *plugin = qobject_cast<Plugin *>(obj);
-            plugins.append(plugin);
+            if (plugin) {
+                plugins.append(plugin);
+                qDebug() << plugin->metaObject()->className() << "has loaded.";
+            } else {
+                qDebug() << "Plugins should inherits Core::Plugin.";
+            }
         } else {
             qDebug() << pluginLoader.errorString();
         }

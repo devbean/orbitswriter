@@ -22,6 +22,8 @@
 #ifndef PLUGINMANAGER_H
 #define PLUGINMANAGER_H
 
+#include "document/markupbuilder.h"
+
 #include "pluginmanager_p.h"
 
 #include <QObject>

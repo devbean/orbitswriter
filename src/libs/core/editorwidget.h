@@ -1,8 +1,8 @@
 /*-------------------------------------------------
  *
- * OrbitsWriter - An Offline Blog Writer
+ * OrbitsWriter - an Offline Blog Writer
  *
- * Copyright (C) 2016  devbean@galaxyworld.org
+ * Copyright (C) 2016 devbean@galaxyworld.org
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,34 +19,22 @@
  *
  *-------------------------------------------------*/
 
-#include "wordpresspublisher.h"
+#ifndef EDITORWIDGET_H
+#define EDITORWIDGET_H
 
-WordPressPublisher::WordPressPublisher()
+#include "core/core_global.h"
+
+namespace Core
 {
 
-}
-
-QString WordPressPublisher::name() const
+class CORE_EXPORT EditorWidget
 {
-    return QStringLiteral("WordPressPublisher");
-}
+public:
+    virtual ~EditorWidget() {}
 
-QString WordPressPublisher::version() const
-{
-    return QStringLiteral("1.0.0");
-}
+    virtual void textBold() = 0;
+};
 
-QString WordPressPublisher::vendor() const
-{
-    return QStringLiteral("galaxyworld.org");
-}
+} // end of namespace Core
 
-QString WordPressPublisher::targetName() const
-{
-    return QStringLiteral("WordPress");
-}
-
-QString WordPressPublisher::targetVersion() const
-{
-    return QStringLiteral("4.5");
-}
+#endif // EDITORWIDGET_H

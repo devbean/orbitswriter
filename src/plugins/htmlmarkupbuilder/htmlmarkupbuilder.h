@@ -25,9 +25,10 @@
 #include "htmlmarkupbuilder_p.h"
 
 #include <Core/MarkupBuilder>
+#include <Core/Plugin>
 #include <QObject>
 
-class HTMLMarkupBuilder : public Core::MarkupBuilder
+class HTMLMarkupBuilder : public Core::Plugin, public Core::MarkupBuilder
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID MarkupBuilder_iid FILE "htmlmarkupbuilder.json")
